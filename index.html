@@ -43,73 +43,90 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div id="app" class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-xs-12">
           <h2>Enter values</h2>
+          <ul>
+            <li>Open Straight = Open-ended straight</li>
+            <li>Inside Straight = Gutshot straight</li>
+          </ul>
           <div class="col-md-6">
             <form>
               <div class="form-group">
                 <label for="inputBetSize">Size of Bet</label>
-                <input type="number" class="form-control" id="inputBetSize" placeholder="Size of Bet">
+                <input type="number" v-model.number="bet" class="form-control" id="inputBetSize" placeholder="Size of Bet">
               </div>
               <div class="form-group">
-                <label for="inputPotSize">Size of Pot</label>
-                <input type="number" class="form-control" id="inputPotSize" placeholder="Size of Pot">
+                <label for="inputPotSize">Current Size of Pot</label>
+                <input type="number" v-model.number="pot" class="form-control" id="inputPotSize" placeholder="Size of Pot">
               </div>
               <div class="form-group">
-                <label for="inputCallers">Number of callers after you</label>
-                <input type="number" class="form-control" id="inputCallers" placeholder="Callers">
+                <label for="inputCallers">Number of callers after you (You suspect)</label>
+                <input type="number" v-model.number="callers" class="form-control" id="inputCallers" placeholder="Callers">
               </div>
             </form>
           </div>
           <div class="col-md-6">
-            <h2>Street</h2>
-            <div class="radio">
-                <label>
-                  <input type="radio" name="streetRadios" id="optionsRadios1" value="option1" checked>
-                  Turn
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input type="radio" name="streetRadios" id="optionsRadios2" value="option2">
-                  River
-                </label>
-              </div>
-              <div class="radio disabled">
-                <label>
-                  <input type="radio" name="streetRadios" id="optionsRadios3" value="option3" disabled>
-                  Turn and River 
-                </label>
-              </div>
-            <h2>Your draw or win percentage</h2>
-            <div class="radio">
-              <label>
-                <input type="radio" name="handRadios" id="optionsRadios1" value="option1" checked>
-                Open-ended Straight Draw
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                Flush Draw
-              </label>
-            </div>
-            <div class="radio disabled">
-              <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-                Flush and open-ended Straight draws
-              </label>
-            </div>
+            <h2>Outs</h2>
+            <select class="form-control" v-model="outs">
+                <option disabled value="">Please select one</option>
+                <option v-bind:value="17">17</option>
+                <option v-bind:value="16">16</option>
+                <option v-bind:value="15">15 (Flush + Open-Straight or Two Overcards)</option>
+                <option v-bind:value="14">14</option>
+                <option v-bind:value="13">13</option>
+                <option v-bind:value="12">12 (Flush + Inside-straight or One Overcard)</option>
+                <option v-bind:value="11">11 (Open straight + one overcard)</option>
+                <option v-bind:value="10">10 (Inside straight + two overcards)</option>
+                <option v-bind:value="9">9 (Flush Draw)</option>
+                <option v-bind:value="8">8 (Open-ended Straight)</option>
+                <option v-bind:value="7">7 (Set to FH or Quads)</option>
+                <option v-bind:value="6">6 (No pair to pair / Two overcards)</option>
+                <option v-bind:value="5">5 (One pair to two pair / set)</option>
+                <option v-bind:value="4">4 (Inside straight / two pair to full house)</option>
+                <option v-bind:value="3">3 (one overcard)</option>
+                <option v-bind:value="2">2</option>
+                <option v-bind:value="1">1</option>
+                <option v-bind:value="0">0</option>
+              </select>
           </div>
         </div>
       </div>
       <div class="col-xs-12">
         <h2>Results</h2>
-        <div class="well">
-
+        <div class="row">
+            <div class="col-xs-12 well">
+              <template v-if="alright">
+                <div class="col-md-6">
+                  <p>Total pot: <b>{{ sizeOfPot }}</b></p>
+                  <p>Pot odds: <b>{{ potOdds | percentage }}</b></p>
+                  <p>Call the turn? 
+                    <b v-if="callTurn" style="color: green;">Yes</b>
+                    <b v-else style="color: red;">No</b>
+                  </p>
+                  <p>Call the river? 
+                      <b v-if="callRiver" style="color: green;">Yes</b>
+                      <b v-else style="color: red;">No</b>
+                  </p>
+                  <p>Call an All in? 
+                      <b v-if="callCombined" style="color: green;">Yes</b>
+                      <b v-else style="color: red;">No</b>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <p>Number of Outs: <b>{{ outs }}</b></p>
+                  <p>Turn Odds: <b>{{ turnOdds | percentage }}</b></p>
+                  <p>River Odds: <b>{{ riverOdds | percentage }}</b></p>
+                  <p>Only use odds for both turn and river when you are in an all-in moment</p>
+                  <p>Combined Odds: <b>{{ combinedOdds | percentage }}</b></p>
+                </div>
+              </template>
+              <template v-else>
+                  <p>Please enter a valid bet size and pot size</p>
+              </template>
+            </div>
         </div>
       </div>
 
@@ -121,6 +138,8 @@
     </div> <!-- /container -->        
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/math.min.js"></script>
+        <script src="js/vendor/vue.min.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
