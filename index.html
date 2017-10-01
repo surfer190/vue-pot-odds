@@ -48,8 +48,68 @@
       <div class="row">
         <div class="col-xs-12">
           <h2>Enter values</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <div class="col-md-6">
+            <form>
+              <div class="form-group">
+                <label for="inputBetSize">Size of Bet</label>
+                <input type="number" class="form-control" id="inputBetSize" placeholder="Size of Bet">
+              </div>
+              <div class="form-group">
+                <label for="inputPotSize">Size of Pot</label>
+                <input type="number" class="form-control" id="inputPotSize" placeholder="Size of Pot">
+              </div>
+              <div class="form-group">
+                <label for="inputCallers">Number of callers after you</label>
+                <input type="number" class="form-control" id="inputCallers" placeholder="Callers">
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <h2>Street</h2>
+            <div class="radio">
+                <label>
+                  <input type="radio" name="streetRadios" id="optionsRadios1" value="option1" checked>
+                  Turn
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="streetRadios" id="optionsRadios2" value="option2">
+                  River
+                </label>
+              </div>
+              <div class="radio disabled">
+                <label>
+                  <input type="radio" name="streetRadios" id="optionsRadios3" value="option3" disabled>
+                  Turn and River 
+                </label>
+              </div>
+            <h2>Your draw or win percentage</h2>
+            <div class="radio">
+              <label>
+                <input type="radio" name="handRadios" id="optionsRadios1" value="option1" checked>
+                Open-ended Straight Draw
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                Flush Draw
+              </label>
+            </div>
+            <div class="radio disabled">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+                Flush and open-ended Straight draws
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <h2>Results</h2>
+        <div class="well">
+
         </div>
       </div>
 
