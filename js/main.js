@@ -17,7 +17,7 @@ var app = new Vue({
             return this.bet / this.sizeOfPot;
         },
         sizeOfPot: function() {
-            return this.pot + this.bet + (this.bet * this.callers);
+            return this.pot + (this.bet * this.callers);
         },
         turnOdds: function() {
             return this.outs / 47;
